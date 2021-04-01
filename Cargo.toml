@@ -1,0 +1,11 @@
+[package]
+name = "nigde"
+version = "0.1.0"
+authors = ["Artur Valiullin <ar.valiullin@niuitmo.ru>"]
+edition = "2018"
+description = "NItta Generic Delivery and Execution"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+rocket = "0.4.7"
