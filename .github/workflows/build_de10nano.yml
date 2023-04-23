@@ -8,7 +8,7 @@ env:
   CXX_arm_unknown_linux_gnueabihf: arm-linux-gnueabihf-g++
 
 jobs:
-  Build Job:
+  Build-Job:
     runs-on: ubuntu-latest
     steps:
       - name: Install arm-linux-gnueabihf tools
