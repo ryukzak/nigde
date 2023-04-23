@@ -1,0 +1,26 @@
+name: De10-Nano Build
+run-name: Building for De10-nano
+on: [push]
+jobs:
+  Run-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - run: apt install -y gcc-arm-linux-gnueabihf libc6-dev-armhf-cross
+      - run: rustup target add arm-unknown-linux-gnueabihf
+      - run: rustup toolchain install stable-arm-unknown-linux-gnueabihf
+      - run: rustup component add clippy
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - name: Check code formatting
+        run: cargo fmt --check
+      - name: Tests
+        run: cargo test
+      - name: Clippy checks
+        run: cargo clippy --release -- --D warnings
+      - name: Build target arm-unknown-linux-gnueabihf
+        run: cargo build --release --target arm-unknown-linux-gnueabihf
+        env:
+          CARGO_TARGET_ARM_UNKNOWN_LINUX_GNUEABIHF_LINKER: arm-linux-gnueabihf-gcc
+          CC_arm_unknown_Linux_gnueabihf: arm-linux-gnueabihf-gcc
+          CXX_arm_unknown_linux_gnueabihf: arm-linux-gnueabihf-g++
+
