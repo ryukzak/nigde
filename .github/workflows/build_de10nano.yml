@@ -1,5 +1,5 @@
 name: De10-Nano Build
-run-name: Building for De10-nano
+run-name: Building arm-unknown-linux-gnueabihf target
 on: [push]
 
 env:
@@ -11,16 +11,8 @@ jobs:
   Run-tests:
     runs-on: ubuntu-latest
     steps:
-      - run: sudo apt install -y gcc-arm-linux-gnueabihf libc6-dev-armhf-cross
-
-#      # using https://actions-rs.github.io
-#      - name: Install latest rust toolchain
-#        uses: actions-rs/toolchain@v1
-#        with:
-#          toolchain: stable
-#          target: arm-unknown-linux-gnueabihf
-#          default: true
-#          override: true
+      - name: Install arm-linux-gnueabihf tools
+        run: sudo apt install -y gcc-arm-linux-gnueabihf libc6-dev-armhf-cross
 
       - name: Check out repository code
         uses: actions/checkout@v3
@@ -34,7 +26,7 @@ jobs:
             ~/.cargo
             ./target
 
-      - name: install rustup
+      - name: Install rustup and toolchain
         run: |
           curl --proto '=https' --tlsv1.3 https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain stable
           rustup target add arm-unknown-linux-gnueabihf
@@ -42,22 +34,22 @@ jobs:
           rustup component add clippy
 
       # tests, fmt check, clippy
-      - name: Check code formatting
+      - name: Rustfmt checks
         run: cargo fmt --check
       - name: Tests
         run: cargo test
       - name: Clippy checks
-        run: cargo clippy --release -- --D warnings
+        run: cargo clippy --release --target arm-unknown-linux-gnueabihf -- --D warnings
 
       # build
       - name: Build target arm-unknown-linux-gnueabihf
         run: cargo build --release --target arm-unknown-linux-gnueabihf
 
       # upload binary
-      - name: Upload the build output
+      - name: Upload build artifact
         uses: actions/upload-artifact@v2
         with:
-          name: build-output
+          name: nigde_build_output
           path: target/arm-unknown-linux-gnueabihf/release/nigde
           retention-days: 1
 
