@@ -7,11 +7,14 @@ REST Api service to run
 ## Project structure
 
 The project consists of rust packages combined into a single workspace
+
 **Packages:**
+
 - nigde - Rest service, for controlling the processor via the API
 - fpga_hps_programmator - Firmware loading into FPGA and other low-level interaction between HPS and FPGA
 
 **Other packages:**
+
 - simple_led_driver - simplest example of rust userspace driver
 
 ## Dependencies
@@ -23,7 +26,7 @@ The project consists of rust packages combined into a single workspace
 
 If you need to build for `arm-unknown-linux-gnueabihf` platform, use Dockerfile:
 
-```
+```bash
 docker built -t nigde_arm_builder
 docker run --rm -v .:/app nigde_arm_builder:latest
 ```
