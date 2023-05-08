@@ -56,7 +56,9 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: nigde_build_output
-          path: target/arm-unknown-linux-gnueabihf/release/nigde
+          path: |
+            target/arm-unknown-linux-gnueabihf/release/nigde
+            target/arm-unknown-linux-gnueabihf/release/fpga_hps_programmator_bin
           retention-days: 1
 
 

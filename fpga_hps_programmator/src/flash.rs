@@ -6,7 +6,6 @@ use std::{env, fs};
 use sys_mount::Mount;
 
 /// takes path to .rbf file and then generates all device tree files, mounts fs and flashes fpga
-#[allow(unused)]
 pub fn flash_fpga(rbf_file_path: &Path) -> Result<(), FpgaProgError> {
     if !rbf_file_path.is_file() {
         return Err(FpgaProgError::BadRbfFile);

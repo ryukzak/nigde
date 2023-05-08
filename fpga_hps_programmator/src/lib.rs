@@ -5,6 +5,8 @@ mod flash;
 // use std::process::Command;
 // use sys_mount::Mount;
 
+pub use flash::flash_fpga;
+
 //
 // /// takes path to .rbf file and then generates all device tree files, mounts fs and flashes fpga
 // pub fn flash_fpga(rbf_file_path: &Path) -> Result<(), io::Error> {

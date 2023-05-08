@@ -1,5 +1,8 @@
 [workspace]
-members=["fpga_hps_programmator"]
+members=[
+    "fpga_hps_programmator",
+    "fpga_hps_programmator_bin",
+]
 
 [package]
 name = "nigde"
@@ -13,3 +16,4 @@ license-file = "LICENSE"
 [dependencies]
 #web_service = { path="web_service" }
 axum = "0.6"
+fpga_hps_programmator = { version="0.1.0", path="fpga_hps_programmator" }
