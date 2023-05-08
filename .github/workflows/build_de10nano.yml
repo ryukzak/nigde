@@ -49,21 +49,14 @@ jobs:
 
       # build
       - name: Build target arm-unknown-linux-gnueabihf
-        run: cargo build --release --target arm-unknown-linux-gnueabihf
+        run: cargo build --release --workspace --target arm-unknown-linux-gnueabihf
 
       # upload binaries
       - name: Upload build artifact
         uses: actions/upload-artifact@v3
         with:
           name: nigde_build_output
-          path: target/arm-unknown-linux-gnueabihf/release/nigde
+          path: |
+            target/arm-unknown-linux-gnueabihf/release/nigde
+            target/arm-unknown-linux-gnueabihf/release/fpga_hps_programmator_bin
           retention-days: 1
-
-      - name: Upload fpga_hps_programmator_bin artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: fpga_hps_programmator_bin
-          path: target/arm-unknown-linux-gnueabihf/release/fpga_hps_programmator_bin
-          retention-days: 1
-
-
