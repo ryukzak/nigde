@@ -9,7 +9,7 @@ env:
 
 jobs:
   Build-Job:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Install arm-linux-gnueabihf tools
         run: sudo apt install -y gcc-arm-linux-gnueabihf libc6-dev-armhf-cross

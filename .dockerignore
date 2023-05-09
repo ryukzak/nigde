@@ -1,0 +1,5 @@
+target/
+.idea
+venv
+.markdownlint.yaml
+**/*.md
