@@ -13,18 +13,9 @@ pub fn flash_fpga(rbf_file_path: &Path) -> Result<(), FpgaProgError> {
 
     let tmp_dir = env::temp_dir();
 
-    // let firmware_name = rbf_file_path.file_name()
-    //     .ok_or(FpgaProgError::Other(String::from("Cannot get firmware name")))?
-    //     .to_str()
-    //     .ok_or(FpgaProgError::Other(String::from("Cannot get firmware name")))?
-    //     .rsplitn(1, ".")
-    //     .last()
-    //     .ok_or(FpgaProgError::Other(String::from("Cannot get firmware name")))?;
-
     let firmware_name = rbf_file_path
-        .file_name()
+        .file_stem()
         .and_then(|file_name| file_name.to_str())
-        .and_then(|file_name| file_name.rsplitn(2, '.').last())
         .ok_or(FpgaProgError::Other(String::from(
             "Cannot get firmware name",
         )))?;
@@ -32,7 +23,9 @@ pub fn flash_fpga(rbf_file_path: &Path) -> Result<(), FpgaProgError> {
     println!("firmware name: {firmware_name}");
 
     let _dtso_file_path = create_dtso(&tmp_dir, firmware_name)?;
+    println!("dtso_file_path: {_dtso_file_path:?}");
     let dtbo_file_path = create_dtbo(&tmp_dir, firmware_name)?;
+    println!("dtbo_file_path: {dtbo_file_path:?}");
 
     prepare_fs(rbf_file_path, &dtbo_file_path, firmware_name)
 }
@@ -58,7 +51,7 @@ fn create_dtso(dir_path: &Path, firmware_name: &str) -> Result<PathBuf, FpgaProg
 
     // let dtso_file_path = PathBuf::from(format!("{file_name}.dtso"));
     let dtso_file_path = dir_path.join(format!("{firmware_name}.dtso"));
-    let mut file = fs::File::open(&dtso_file_path)?;
+    let mut file = fs::File::create(&dtso_file_path)?;
     file.write_all(dtso_content.as_bytes())?;
 
     Ok(dtso_file_path)
@@ -67,11 +60,10 @@ fn create_dtso(dir_path: &Path, firmware_name: &str) -> Result<PathBuf, FpgaProg
 /// generate the device tree binary .dtbo
 fn create_dtbo(dir_path: &Path, firmware_name: &str) -> Result<PathBuf, FpgaProgError> {
     let command_status = Command::new("dtc")
-        // .args(format!("-O dtb -o {firmware_name}.dtbo -b 0 -@ {firmware_name}.dtso"))
         .arg("-O")
         .arg("dtb")
         .arg("-o")
-        .arg(format!("{firmware_name}.dtbo "))
+        .arg(format!("{firmware_name}.dtbo"))
         .arg("-b")
         .arg("0")
         .arg("-@")
@@ -92,9 +84,19 @@ fn prepare_fs(
     dtbo_file_path: &Path,
     firmware_name: &str,
 ) -> Result<(), FpgaProgError> {
-    fs::create_dir_all("/lib/firmware")?;
-    fs::copy(dtbo_file_path, "/lib/firmware")?;
-    fs::copy(rbf_file_path, "/lib/firmware")?;
+    let lib_firmware_path = Path::new("/lib/firmware");
+    fs::create_dir_all(lib_firmware_path)?;
+
+    fs::copy(
+        dtbo_file_path,
+        lib_firmware_path.join(format!("{firmware_name}.dtbo")),
+    )?;
+
+    fs::copy(
+        rbf_file_path,
+        lib_firmware_path.join(format!("{firmware_name}.rbf")),
+    )?;
+
     fs::create_dir_all("/config")?;
 
     let _mount_result = Mount::builder()

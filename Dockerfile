@@ -19,6 +19,10 @@ ENV CARGO_TARGET_ARM_UNKNOWN_LINUX_GNUEABIHF_LINKER=arm-linux-gnueabihf-gcc CC_a
 #ENV TESTS_CMD="cargo test"
 #ENV BUILD_CMD="cargo build --release --target arm-unknown-linux-gnueabihf"
 #CMD $RUSTFMT_CMD ; $TESTS_CMD ; $CLIPPY_CMD ; $BUILD_CMD
+RUN cargo update
+
+RUN rustup component add rustfmt
+
 RUN cargo clippy --release --workspace --target arm-unknown-linux-gnueabihf -- --D warnings
 RUN cargo fmt --target arm-unknown-linux-gnueabihf --check
 RUN cargo test
