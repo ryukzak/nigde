@@ -3,7 +3,7 @@ use std::io::Write;
 use std::path::{Path, PathBuf};
 use std::process::Command;
 use std::{env, fs};
-// use sys_mount::Mount;
+use sys_mount::Mount;
 
 /// takes path to .rbf file and then generates all device tree files, mounts fs and flashes fpga
 pub fn flash_fpga(rbf_file_path: &Path) -> Result<(), FpgaProgError> {
@@ -97,16 +97,16 @@ fn prepare_fs(
     fs::copy(rbf_file_path, "/lib/firmware")?;
     fs::create_dir_all("/config")?;
 
-    // let _mount_result = Mount::builder()
-    //     .fstype("configfs")
-    //     .mount("configfs", "/config")?;
+    let _mount_result = Mount::builder()
+        .fstype("configfs")
+        .mount("configfs", "/config")?;
 
-    let _mount_result = Command::new("mount")
-        .arg("-t")
-        .arg("configfs")
-        .arg("configfs")
-        .arg("/config")
-        .status()?;
+    // let _mount_result = Command::new("mount")
+    //     .arg("-t")
+    //     .arg("configfs")
+    //     .arg("configfs")
+    //     .arg("/config")
+    //     .status()?;
 
     let overlays_path = PathBuf::from("/config/device-tree/overlays/");
     let firmware_overlays_path = overlays_path.join(firmware_name);
