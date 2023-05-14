@@ -1,5 +1,7 @@
 target/
-.idea
-venv
+.idea/
+venv/
 .markdownlint.yaml
 **/*.md
+files/
+build_out/
