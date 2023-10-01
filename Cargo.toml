@@ -1,0 +1,19 @@
+[workspace]
+members=[
+    "fpga_hps_programmator",
+    "fpga_hps_programmator_bin",
+]
+
+[package]
+name = "nigde"
+version = "0.1.0"
+edition = "2021"
+readme = "README.md"
+license-file = "LICENSE"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+#web_service = { path="web_service" }
+axum = "0.6"
+fpga_hps_programmator = { version="0.1.0", path="fpga_hps_programmator" }
