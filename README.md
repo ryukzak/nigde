@@ -86,8 +86,8 @@ cargo build
 - Стягивается код
 - Запускается проверка корректности md файлов (?)
 - Кэш сборки нужен для двух вещей:
-  - индекс crates.io очень долго загружается с нуля, если не использовать sparse-index (но на момент работы такая опция была только в nightly).
-  - чтобы не пересобирать зависимости
+    - индекс crates.io очень долго загружается с нуля, если не использовать sparse-index (но на момент работы такая опция была только в nightly).
+    - чтобы не пересобирать зависимости
 - Ставится rustup, тулчейны
 - Запускается rustfmt (проверка синтаксиса), тесты, clippy (тоже проверки кода)
 - Сборка
@@ -95,5 +95,5 @@ cargo build
 
 ### Полезные ссылки
 
-1. Absolute beginner's guide to DE10-Nano - https://github.com/zangman/de10-nano/tree/master
-2. minicom tutorial - https://soft-setup.ru/instrukcziya-po-ispolzovaniyu-minicom-v-linux/
+1. [Absolute beginner's guide to DE10-Nano](https://github.com/zangman/de10-nano/tree/master)
+2. []minicom tutorial](https://soft-setup.ru/instrukcziya-po-ispolzovaniyu-minicom-v-linux/)
