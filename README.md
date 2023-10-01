@@ -96,4 +96,4 @@ cargo build
 ### Полезные ссылки
 
 1. [Absolute beginner's guide to DE10-Nano](https://github.com/zangman/de10-nano/tree/master)
-2. []minicom tutorial](https://soft-setup.ru/instrukcziya-po-ispolzovaniyu-minicom-v-linux/)
+2. [minicom tutorial](https://soft-setup.ru/instrukcziya-po-ispolzovaniyu-minicom-v-linux/)
